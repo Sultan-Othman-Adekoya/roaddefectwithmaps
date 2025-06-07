@@ -1,7 +1,7 @@
 streamlit
-ultralytics
-opencv-python
-Pillow
-numpy
-fpdf
 requests
+numpy
+opencv-python
+pillow
+ultralytics
+fpdf
