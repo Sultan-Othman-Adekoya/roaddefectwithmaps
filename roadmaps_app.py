@@ -11,7 +11,7 @@ import os
 
 # --- Config ---
 st.set_page_config(page_title="Road Defect Detection via Address", layout="centered")
-GOOGLE_API_KEY = "AIzaSyCrsamzHNFwZH3uHs9ecnRB4qx5lbn6PfQ"  # Replace with your actual key or use st.secrets["GOOGLE_API_KEY"]
+GOOGLE_API_KEY = st.secrets["GOOGLE_API_KEY"]  # Replace with your actual key or use st.secrets["GOOGLE_API_KEY"]
 os.makedirs("reports", exist_ok=True)
 
 # --- Load model ---
