@@ -83,25 +83,25 @@ with st.sidebar:
     detect_button = st.button("🚀 Fetch & Detect")
 
 # Create placeholder for detection log
-log_container = st.expander("📝 Detection Log", expanded=False)
+    log_placeholder = st.container("📝 Detection Log", expanded=False)
 # Initialize before use
 lat, lon = None, None
 detections = []
 
-# Detection log (display only after detection)
-if detect_button and address:
-    with log_container:
-        st.markdown("### ✅ Detection Summary")
-        st.write(f"**Address:** {address}")
-        st.write(f"**Timestamp:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-        if lat and lon:
-            st.write(f"**Coordinates:** ({lat}, {lon})")
-        if detections:
-            st.write("**Detected Defects:**")
-            for item in detections:
-                st.write(f"- {item['name']} ({item['confidence']:.2f}%)")
-        else:
-            st.write("No defects detected.")
+# After detection is done and `detections` are populated
+with log_placeholder:
+    st.markdown("### 📝 Detection Log")
+    st.write(f"**Address:** {address}")
+    st.write(f"**Timestamp:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    if lat and lon:
+        st.write(f"**Coordinates:** ({lat:.5f}, {lon:.5f})")
+    if detections:
+        st.write("**Detected Defects:**")
+        for item in detections:
+            st.markdown(f"- {item['name']} ({item['confidence']:.2f}%)")
+    else:
+        st.info("No defects detected.")
+
 
 
 if detect_button:
@@ -186,49 +186,3 @@ st.markdown("""
         <a href="https://github.com/Sultan-Othman-Adekoya" target="_blank">GitHub</a>
     </div>
     """, unsafe_allow_html=True)
-
-st.markdown(
-    f"""
-    <style>
-    .stApp {{
-        background: 
-            linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), 
-            url("data:image/jpeg;base64,{base64_img}");
-        background-attachment: fixed;
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-    }}
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-# ------- Custom footer with social media links ------- #
-st.markdown("""
-    <style>
-    .footer {
-        position: fixed;
-        left: 0;
-        bottom: 0;
-        width: 100%;
-        background-color: #4CAF50;
-        color: white;
-        text-align: center;
-        padding: 10px;
-        z-index: 999;
-    }
-    .footer a {
-        color: white;
-        text-decoration: none;
-        margin: 0 10px;
-    }
-    </style>
-    <div class="footer">
-        Developed by Sultan-Othman Adekoya - ©2025 | In Association with 3MTT DeepTech_Ready IET
-        <br>
-        <a href="https://www.instagram.com/tobisultanothman/" target="_blank">Instagram</a>
-        <a href="https://www.linkedin.com/in/sultan-othman/" target="_blank">LinkedIn</a>
-        <a href="https://github.com/Sultan-Othman-Adekoya" target="_blank">GitHub</a>
-    </div>
-    """, unsafe_allow_html=True)
-
