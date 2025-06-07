@@ -132,7 +132,7 @@ def get_base64_image(image_path):
     with open(image_path, "rb") as img_file:
         return base64.b64encode(img_file.read()).decode()
 
-local_image_path = "/content/Untitled design.jpg"
+local_image_path = os.path.join("assets", "Untitled design.jpg")
 base64_img = get_base64_image(local_image_path)
 
 st.markdown(
