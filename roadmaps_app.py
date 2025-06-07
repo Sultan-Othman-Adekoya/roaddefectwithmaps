@@ -76,7 +76,7 @@ def generate_pdf(address, detections, lat=None, lon=None):
     return path
 
 # --- Streamlit App ---
-st.title("📍 Road Defect Detector from Google Street View")
+st.title("📍 Road Defect Detector")
 st.markdown("Enter an address, and we’ll detect visible road defects from Google Street View.")
 
 address = st.text_input("🛣️ Enter Road Address")
@@ -179,9 +179,6 @@ st.markdown("""
         <a href="https://github.com/Sultan-Othman-Adekoya" target="_blank">GitHub</a>
     </div>
     """, unsafe_allow_html=True)
-
-local_image_path = "/content/Untitled design.jpg"
-base64_img = get_base64_image(local_image_path)
 
 st.markdown(
     f"""
