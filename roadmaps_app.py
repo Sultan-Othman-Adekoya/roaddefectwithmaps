@@ -94,7 +94,7 @@ if st.button("Fetch & Detect"):
                 image_cv = fetch_image_from_url(street_img_url)
                 image_rgb = cv2.cvtColor(image_cv, cv2.COLOR_BGR2RGB)
 
-                st.image(image_rgb, caption="Street View Image", use_column_width=True)
+                st.image(image_rgb, caption="Street View Image", use_container_width=True)
 
                 with st.spinner("Detecting defects..."):
                     results = model(image_cv, task="detect")
@@ -109,7 +109,7 @@ if st.button("Fetch & Detect"):
                         detections.append({"name": name, "confidence": confidence})
 
                     annotated_image = results[0].plot()
-                    st.image(annotated_image, caption="Detection Output", use_column_width=True)
+                    st.image(annotated_image, caption="Detection Output", use_container_width=True)
 
                     if detections:
                         st.markdown("### 🔍 Detected Defects")
