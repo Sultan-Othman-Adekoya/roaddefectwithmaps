@@ -83,7 +83,7 @@ with st.sidebar:
     detect_button = st.button("🚀 Fetch & Detect")
 
 # Create placeholder for detection log
-    log_placeholder = st.container("📝 Detection Log", expanded=False)
+    log_placeholder = st.container()
 # Initialize before use
 lat, lon = None, None
 detections = []
