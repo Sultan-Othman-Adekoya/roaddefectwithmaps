@@ -1,7 +1,7 @@
 streamlit
-requests
+opencv-python-headless==4.7.0.72
 numpy
-opencv-python-headless==4.8.0.74
-pillow
+requests
+Pillow
 ultralytics
 fpdf
