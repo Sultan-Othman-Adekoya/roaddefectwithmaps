@@ -1,4 +1,3 @@
-
 import streamlit as st
 import requests
 import numpy as np
@@ -78,9 +77,34 @@ def generate_pdf(address, detections, lat=None, lon=None):
 # --- Streamlit App ---
 st.title("📍 Road Defect Detector")
 st.markdown("Enter an address, and we’ll detect visible road defects from Google Street View.")
+with st.sidebar:
+    st.header("🔧 Controls")
+    address = st.text_input("🛣️ Enter Road Address")
+    detect_button = st.button("🚀 Fetch & Detect")
 
-address = st.text_input("🛣️ Enter Road Address")
-if st.button("Fetch & Detect"):
+# Create placeholder for detection log
+log_container = st.expander("📝 Detection Log", expanded=False)
+# Initialize before use
+lat, lon = None, None
+detections = []
+
+# Detection log (display only after detection)
+if detect_button and address:
+    with log_container:
+        st.markdown("### ✅ Detection Summary")
+        st.write(f"**Address:** {address}")
+        st.write(f"**Timestamp:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        if lat and lon:
+            st.write(f"**Coordinates:** ({lat}, {lon})")
+        if detections:
+            st.write("**Detected Defects:**")
+            for item in detections:
+                st.write(f"- {item['name']} ({item['confidence']:.2f}%)")
+        else:
+            st.write("No defects detected.")
+
+
+if detect_button:
     if not address:
         st.warning("Please enter an address.")
     else:
@@ -98,9 +122,6 @@ if st.button("Fetch & Detect"):
 
                 with st.spinner("Detecting defects..."):
                     results = model(image_cv, task="detect")
-
-
-                    # Parse detections
                     detections = []
                     for det in results[0].boxes.data.cpu().numpy():
                         x1, y1, x2, y2, conf, cls = det
@@ -118,7 +139,7 @@ if st.button("Fetch & Detect"):
                     else:
                         st.info("No visible road defects were detected.")
 
-                    # --- PDF Report ---
+                    # Generate and download PDF
                     report_path = generate_pdf(address, detections, lat, lon)
                     with open(report_path, "rb") as f:
                         st.download_button(
@@ -126,7 +147,8 @@ if st.button("Fetch & Detect"):
                             data=f,
                             file_name=os.path.basename(report_path),
                             mime="application/pdf"
-                            )
+                        )
+
 
 def get_base64_image(image_path):
     with open(image_path, "rb") as img_file:
@@ -135,22 +157,7 @@ def get_base64_image(image_path):
 local_image_path = os.path.join("assets", "Untitled design.jpg")
 base64_img = get_base64_image(local_image_path)
 
-st.markdown(
-    f"""
-    <style>
-    .stApp {{
-        background:
-            linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)),
-            url("data:image/jpeg;base64,{base64_img}");
-        background-attachment: fixed;
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-    }}
-    </style>
-    """,
-    unsafe_allow_html=True
-    )
+
 # ------- Custom footer with social media links ------- #
 st.markdown("""
     <style>
@@ -225,4 +232,3 @@ st.markdown("""
     </div>
     """, unsafe_allow_html=True)
 
-          
