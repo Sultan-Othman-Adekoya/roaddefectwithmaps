@@ -39,3 +39,6 @@ Project Structure
 ├── roadmaps_app.py
 ├── best.torchscript
 ├── README.md
+Credits
+Developed by Sultan-Othman Adekoya FE2382732712
+In association with 3MTT DeepTech_Ready 
