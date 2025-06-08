@@ -43,4 +43,11 @@ Project Structure
 
 *Credits*
 Developed by Sultan-Othman Adekoya FE2382732712
-In association with 3MTT DeepTech_Ready 
+In association with 3MTT DeepTech_Ready
+
+
+---
+
+## Credits
+Developed by Sultan-Othman Adekoya
+In association with 3MTT DeepTech_Ready and IET
