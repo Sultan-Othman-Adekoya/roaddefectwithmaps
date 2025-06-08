@@ -85,11 +85,11 @@ if "last_address" not in st.session_state:
     st.session_state.last_address = ""
 
 # --- Streamlit App ---
-st.title("\ud83d\udccd Road Defect Detector")
+st.title("Road Defect Detector")
 st.markdown("Enter an address, and we’ll detect visible road defects from Google Street View.")
 
 with st.sidebar:
-    st.header("\ud83d\udd27 Controls")
+    st.header("Controls")
     address = st.text_input("\ud83d\udee3\ufe0f Enter Road Address", value=st.session_state.last_address)
     detect_button = st.button("\ud83d\ude80 Fetch & Detect")
 
