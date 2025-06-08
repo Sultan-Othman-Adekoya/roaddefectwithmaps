@@ -90,11 +90,11 @@ st.markdown("Enter an address, and we’ll detect visible road defects from Goog
 
 with st.sidebar:
     st.header("Controls")
-    address = st.text_input("\ud83d\udee3\ufe0f Enter Road Address", value=st.session_state.last_address)
-    detect_button = st.button("\ud83d\ude80 Fetch & Detect")
+    address = st.text_input("Enter Road Address", value=st.session_state.last_address)
+    detect_button = st.button("Fetch & Detect")
 
     if st.session_state.detections:
-        st.markdown("### \ud83d\udcdd Detection Log")
+        st.markdown("Detection Log")
         st.write(f"**Address:** {st.session_state.last_address}")
         st.write(f"**Timestamp:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
         if st.session_state.lat and st.session_state.lon:
@@ -150,7 +150,7 @@ if detect_button:
                     report_path = generate_pdf(address, detections, lat, lon)
                     with open(report_path, "rb") as f:
                         st.download_button(
-                            label="\ud83d\udcc4 Download PDF Report",
+                            label="Download PDF Report",
                             data=f,
                             file_name=os.path.basename(report_path),
                             mime="application/pdf"
