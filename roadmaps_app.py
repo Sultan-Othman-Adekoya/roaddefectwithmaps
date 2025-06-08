@@ -131,7 +131,8 @@ if detect_button:
                         detections.append({"name": name, "confidence": confidence})
 
                     annotated_image = results[0].plot()
-                    st.image(annotated_image, caption="Detection Output", use_container_width=True)
+                    annotated_rgb = cv2.cvtColor(annotated_image, cv2.COLOR_BGR2RGB)
+                    st.image(annotated_rgb, caption="Detection Output", use_container_width=True)
 
                     if detections:
                         st.markdown("Detected Defects")
