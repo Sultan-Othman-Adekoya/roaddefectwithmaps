@@ -134,7 +134,7 @@ if detect_button:
                     st.image(annotated_image, caption="Detection Output", use_container_width=True)
 
                     if detections:
-                        st.markdown("### \ud83d\udd0d Detected Defects")
+                        st.markdown("Detected Defects")
                         for item in detections:
                             st.write(f"- {item['name']} ({item['confidence']:.2f}%)")
                     else:
