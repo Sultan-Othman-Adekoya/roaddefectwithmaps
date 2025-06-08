@@ -41,13 +41,8 @@ Project Structure
 ├── README.md
 
 
-*Credits*
-Developed by Sultan-Othman Adekoya FE2382732712
-In association with 3MTT DeepTech_Ready
-
-
 ---
 
-## Credits
+Credits
 Developed by Sultan-Othman Adekoya
 In association with 3MTT DeepTech_Ready and IET
