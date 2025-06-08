@@ -156,14 +156,29 @@ if detect_button:
                             file_name=os.path.basename(report_path),
                             mime="application/pdf"
                         )
-
+# -------------------- Background Styling -------------------- #
 def get_base64_image(image_path):
     with open(image_path, "rb") as img_file:
         return base64.b64encode(img_file.read()).decode()
 
 local_image_path = os.path.join("assets", "Untitled design.jpg")
 base64_img = get_base64_image(local_image_path)
-
+st.markdown(
+    f"""
+    <style>
+    .stApp {{
+        background: 
+            linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), 
+            url("data:image/jpeg;base64,{base64_img}");
+        background-attachment: fixed;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }}
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 # ------- Custom footer with social media links ------- #
 st.markdown("""
     <style>
