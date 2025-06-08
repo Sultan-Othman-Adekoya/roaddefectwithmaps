@@ -74,35 +74,36 @@ def generate_pdf(address, detections, lat=None, lon=None):
     pdf.output(path)
     return path
 
+# Init session state for persistence
+if "detections" not in st.session_state:
+    st.session_state.detections = []
+if "lat" not in st.session_state:
+    st.session_state.lat = None
+if "lon" not in st.session_state:
+    st.session_state.lon = None
+if "last_address" not in st.session_state:
+    st.session_state.last_address = ""
+
 # --- Streamlit App ---
-st.title("📍 Road Defect Detector")
+st.title("\ud83d\udccd Road Defect Detector")
 st.markdown("Enter an address, and we’ll detect visible road defects from Google Street View.")
+
 with st.sidebar:
-    st.header("🔧 Controls")
-    address = st.text_input("🛣️ Enter Road Address")
-    detect_button = st.button("🚀 Fetch & Detect")
+    st.header("\ud83d\udd27 Controls")
+    address = st.text_input("\ud83d\udee3\ufe0f Enter Road Address", value=st.session_state.last_address)
+    detect_button = st.button("\ud83d\ude80 Fetch & Detect")
 
-# Create placeholder for detection log
-    log_placeholder = st.container()
-# Initialize before use
-lat, lon = None, None
-detections = []
-
-# After detection is done and `detections` are populated
-with log_placeholder:
-    st.markdown("### 📝 Detection Log")
-    st.write(f"**Address:** {address}")
-    st.write(f"**Timestamp:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-    if lat and lon:
-        st.write(f"**Coordinates:** ({lat:.5f}, {lon:.5f})")
-    if detections:
+    if st.session_state.detections:
+        st.markdown("### \ud83d\udcdd Detection Log")
+        st.write(f"**Address:** {st.session_state.last_address}")
+        st.write(f"**Timestamp:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        if st.session_state.lat and st.session_state.lon:
+            st.write(f"**Coordinates:** ({st.session_state.lat:.5f}, {st.session_state.lon:.5f})")
         st.write("**Detected Defects:**")
-        for item in detections:
+        for item in st.session_state.detections:
             st.markdown(f"- {item['name']} ({item['confidence']:.2f}%)")
     else:
-        st.info("No defects detected.")
-
-
+        st.info("No defects detected yet.")
 
 if detect_button:
     if not address:
@@ -133,22 +134,27 @@ if detect_button:
                     st.image(annotated_image, caption="Detection Output", use_container_width=True)
 
                     if detections:
-                        st.markdown("### 🔍 Detected Defects")
+                        st.markdown("### \ud83d\udd0d Detected Defects")
                         for item in detections:
                             st.write(f"- {item['name']} ({item['confidence']:.2f}%)")
                     else:
                         st.info("No visible road defects were detected.")
 
+                    # Save in session state
+                    st.session_state.detections = detections
+                    st.session_state.lat = lat
+                    st.session_state.lon = lon
+                    st.session_state.last_address = address
+
                     # Generate and download PDF
                     report_path = generate_pdf(address, detections, lat, lon)
                     with open(report_path, "rb") as f:
                         st.download_button(
-                            label="📄 Download PDF Report",
+                            label="\ud83d\udcc4 Download PDF Report",
                             data=f,
                             file_name=os.path.basename(report_path),
                             mime="application/pdf"
                         )
-
 
 def get_base64_image(image_path):
     with open(image_path, "rb") as img_file:
@@ -156,7 +162,6 @@ def get_base64_image(image_path):
 
 local_image_path = os.path.join("assets", "Untitled design.jpg")
 base64_img = get_base64_image(local_image_path)
-
 
 # ------- Custom footer with social media links ------- #
 st.markdown("""
